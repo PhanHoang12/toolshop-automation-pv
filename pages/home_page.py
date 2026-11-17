@@ -21,7 +21,8 @@ class HomePage(BasePage):
         self.sort_select = page.get_by_test_id("sort")
         self.sorting_completed = page.get_by_test_id("sorting_completed")
         self.product_prices = page.get_by_test_id("product-price")
-        # TODO B2/B4 (later): price_slider_max = page.get_by_role("slider").nth(1)
+        self.hammer_category = page.get_by_role("checkbox", name="Hammer", exact=True)
+        self.filter_completed = page.get_by_test_id("filter_completed")
 
     def open(self):
         """Return only after the first product list has arrived.
@@ -56,3 +57,10 @@ class HomePage(BasePage):
 
     def prices(self) -> list[float]:
         return [float(p.replace("$", "")) for p in self.product_prices.all_inner_texts()]
+
+
+    def filter_hammers(self):
+        """Filter through the visible category label, without depending on a fixed ID."""
+        with self.page.expect_response(lambda response: PRODUCT_LIST.search(response.url) is not None):
+            self.hammer_category.check()
+        return self

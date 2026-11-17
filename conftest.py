@@ -1,4 +1,4 @@
-"""Shared fixtures for the Toolshop practice repo.
+"""Shared fixtures for the Toolshop group project.
 
 - URLs come from BASE_URL and API_URL (never hard-coded in tests).
 - data-test is the test id attribute on Toolshop.
@@ -29,6 +29,15 @@ def _load_dotenv(path: Path = Path(__file__).with_name(".env")) -> None:
 
 
 _load_dotenv()
+
+
+def pytest_configure(config: pytest.Config) -> None:
+    """Give each run fresh temp storage without deleting another Windows user's files."""
+    if config.option.basetemp is None:
+        temp_root = Path(__file__).resolve().parent / ".pytest-runs"
+        # Normal mkdir inherits project permissions; pytest's run subdirectory is private.
+        temp_root.mkdir(exist_ok=True)
+        config.option.basetemp = str(temp_root / f"run-{uuid.uuid4().hex}")
 
 
 def _require_env(name: str) -> str:
@@ -140,7 +149,7 @@ def auth_state(browser, base_url: str, test_user: dict, tmp_path_factory) -> str
     path = tmp_path_factory.mktemp("auth") / "state.json"
     context = browser.new_context(base_url=base_url)
     page = context.new_page()
-    page.goto(BasePage.route_prefix + "/auth/login")
+    page.goto(BasePage.route_prefix + "/auth/login", wait_until="domcontentloaded")
     page.get_by_test_id("email").fill(test_user["email"])
     page.get_by_test_id("password").fill(test_user["password"])
     page.get_by_test_id("login-submit").click()
