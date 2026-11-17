@@ -11,6 +11,28 @@ Bốn smoke test dùng Page Object Model trong `tests/ui/test_smoke.py`:
 3. Đăng nhập bằng email không tồn tại: hiện lỗi, giữ URL đăng nhập.
 4. Gửi form Contact trống: báo thiếu Subject và Message.
 
+## Sprint 2 - nửa đầu (18/11)
+
+Bộ test có **24 trường hợp**: 10 API, 12 UI nghiệp vụ phủ sáu nhóm chức năng
+và 2 route. Ngày 17/11/2026 chạy Chromium đạt **24 passed in 67.84s**.
+Bốn smoke test Sprint 1 vẫn xanh.
+
+```powershell
+pytest --collect-only -q -p no:cacheprovider
+pytest -m api -v -p no:cacheprovider
+pytest -v -p no:cacheprovider
+```
+
+Test UI dùng marker `ui`, API dùng `api`, test mạng có thêm `route`.
+Muốn xem 12 trường hợp UI nghiệp vụ:
+
+```powershell
+pytest -m 'ui and not route' --headed --slowmo 700 -v -p no:cacheprovider
+```
+
+Xem bảng đối chiếu yêu cầu và hướng dẫn PR #2 tại [docs/sprint-2.md](docs/sprint-2.md).
+Cần một thành viên khác review và Approve trước khi merge PR #2.
+
 ## Cài đặt trên Windows PowerShell
 
 ```powershell

@@ -23,7 +23,7 @@ class BasePage:
         self.toast = page.get_by_role("alert")
 
     def open(self):
-        self.page.goto(self.route_prefix + self.path)
+        self.page.goto(self.route_prefix + self.path, wait_until="domcontentloaded")
         return self
 
     def go_to_cart(self):
