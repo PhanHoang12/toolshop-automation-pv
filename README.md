@@ -14,7 +14,7 @@ Repo nhóm cho đồ án Automation Testing với Python, Playwright và pytest.
 
 ## Sprint 2 - nửa sau (25/11)
 
-- **BDD (`tests/bdd/`)**: Luồng nghiệp vụ giỏ hàng (`tests/bdd/features/cart.feature` và `tests/bdd/test_cart.py`) dùng `Scenario Outline` + `Examples`, step gọi lại page object (`HomePage`, `ProductPage`, `CartPage`).
+- **BDD (`tests/bdd/`)**: Luồng nghiệp vụ giỏ hàng (`tests/bdd/features/cart.feature` và `tests/bdd/test_cart_bdd.py`) dùng `Scenario Outline` + `Examples`, step gọi lại page object (`HomePage`, `ProductPage`, `CartPage`).
 - **CI (`.github/workflows/ci.yml`)**: 3 trigger (`push` vào `main`, `pull_request`, `workflow_dispatch`), ma trận 3 trình duyệt (`chromium`, `firefox`, `webkit`), `fail-fast: false`, dựng Toolshop bằng Docker (`toolshop/`), chạy toàn bộ test với `-n 2 --reruns 1`, lưu HTML report và trace khi lỗi vào artifact riêng `report-${{ matrix.browser }}`.
 
 ```powershell
